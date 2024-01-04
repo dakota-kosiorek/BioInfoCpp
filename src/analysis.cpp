@@ -68,4 +68,31 @@ namespace bioinfo {
 
         return pm;
     }
+
+    // Calculate how many possible mRNA strands an inputted protein sequence `as` could of come from applied with the modulus 
+    // operator at a value of `m`
+    unsigned int inferredRNACount(AAString &as, const AATranscribableUnitTable &ut, unsigned int m) {
+        unsigned int i;
+        unsigned int asLength = as.getSequenceLength();
+        unsigned int result = 0;
+
+        AATranscribableUnitTable::const_iterator it;
+        unsigned char tUnits;
+        char currAA;
+
+        if (asLength > 0) {
+            for (i = 1; i < asLength; ++i) {
+                currAA = as.getSequence().at(i);
+                it = ut.find(currAA);
+
+                if (it != ut.end() && result != 0) {
+                    result = (result * ut.at(currAA)) % m;
+                } else if (it != ut.end() && result == 0) {
+                    result = ut.at(currAA);
+                }
+            }
+        }
+
+        return result;
+    }
 }

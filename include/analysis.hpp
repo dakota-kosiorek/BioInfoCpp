@@ -20,7 +20,8 @@ namespace bioinfo {
 
     std::vector<unsigned int> exactDNAStringMotif(DNAString &ds, DNAString &motif, bool overlap);
     unsigned int hammingDistance(DNAString &s, DNAString &t);
-    double proteinMass(bioinfo::AAString &as, const MassTable &mt);
+    double proteinMass(AAString &as, const MassTable &mt);
+    unsigned int inferredRNACount(AAString &as, const AATranscribableUnitTable &ut, unsigned int m);
 }
 
 #endif

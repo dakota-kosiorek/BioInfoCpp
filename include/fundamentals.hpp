@@ -7,6 +7,7 @@
 
 namespace bioinfo {
     typedef std::unordered_map<std::string, char> AATable;
+    typedef std::unordered_map<char, unsigned char> AATranscribableUnitTable;
 
     namespace GeneticCode {
         // Hashtable for a RNA codon to a single letter amino acid character 
@@ -30,6 +31,16 @@ namespace bioinfo {
             { "GCU", 'A' }, { "GCC", 'A' }, { "GCA", 'A' }, { "GCG", 'A' },
             { "GAU", 'D' }, { "GAC", 'D' }, { "GAA", 'E' }, { "GAG", 'E' },
             { "GGU", 'G' }, { "GGC", 'G' }, { "GGA", 'G' }, { "GGG", 'G' }
+        };
+    };
+
+    namespace GeneticCodeTranscribableUnits {
+        const AATranscribableUnitTable STANDARD_GENETIC_CODE = {
+            {'A', 4}, {'R', 6}, {'N', 2}, {'D', 2}, {'C', 2}, 
+            {'Q', 2}, {'E', 2}, {'G', 4}, {'H', 2}, {'I', 3}, 
+            {'L', 6}, {'K', 2}, {'M', 1}, {'F', 2}, {'P', 4}, 
+            {'S', 6}, {'T', 4}, {'W', 1}, {'Y', 2}, {'V', 4}, 
+            {'*', 3}
         };
     };
 
