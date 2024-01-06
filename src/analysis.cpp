@@ -95,4 +95,27 @@ namespace bioinfo {
 
         return result;
     }
+
+    // Remove the introns of a RNAString `s` given by a vector of RNAString objects `introns`. The sequence of each item in the 
+    // vector is used as the intron sequence and the first occurrence of each sequence is removed from the original RNA sequence
+    // given by `s`.
+    RNAString spliceRNA(RNAString &s, std::vector<RNAString> &introns) {
+        RNAString mrna = RNAString(s.getHeader(), std::string(""));
+        std::string seq = s.getSequence();
+
+        std::vector<RNAString>::iterator it;
+        unsigned int loc;
+
+        // For every intron loop through pre-mrna sequence and remove the intron
+        for (it = introns.begin(); it != introns.end(); it++) {
+            loc = seq.find(it->getSequence());
+
+            if (loc != std::string::npos) {
+                seq.erase(loc, it->getSequenceLength());
+            }
+        }
+
+        mrna.setSequence(seq);
+        return mrna;
+    }
 }

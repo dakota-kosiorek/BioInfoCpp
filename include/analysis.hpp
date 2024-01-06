@@ -22,6 +22,7 @@ namespace bioinfo {
     unsigned int hammingDistance(DNAString &s, DNAString &t);
     double proteinMass(AAString &as, const MassTable &mt);
     unsigned int inferredRNACount(AAString &as, const AATranscribableUnitTable &ut, unsigned int m);
+    RNAString spliceRNA(RNAString &s, std::vector<RNAString> &introns);
 }
 
 #endif

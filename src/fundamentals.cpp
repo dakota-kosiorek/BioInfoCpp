@@ -39,6 +39,13 @@ namespace bioinfo {
 
     // --------------------------------------------------------------------------
 
+    // Create a new empty RNAString
+    RNAString::RNAString() {
+        (*this).header = "";
+        (*this).sequence = "";
+        (*this).sequenceLength = 0;
+    }
+
     // Create a new RNAString with a header and sequence
     RNAString::RNAString(std::string h, std::string s) {
         (*this).header = h;
