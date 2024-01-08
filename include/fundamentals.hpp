@@ -51,6 +51,7 @@ namespace bioinfo {
             std::string sequence;
             unsigned int sequenceLength;
         public:
+            DNAString();
             DNAString(std::string h, std::string s);
             std::string getHeader();
             std::string getSequence();            

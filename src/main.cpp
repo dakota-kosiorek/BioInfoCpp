@@ -12,13 +12,9 @@ int main() {
     std::cout << std::fixed << std::setprecision(3);
 
     std::vector<bioinfo::DNAString> vec = bioinfo::readDNAStringFile("rosalind_grph.txt");
+    bioinfo::AdjacencyList dsal = bioinfo::AdjacencyList(vec, 3);
 
-    std::vector<bioinfo::DNAString>::iterator it;
-
-    for (it = vec.begin(); it != vec.end(); it++) {
-        std::cout << it->getHeader() << std::endl;
-        std::cout << it->getSequence() << std::endl;
-    }
+    std::cout << dsal.toString() << std::endl;
 
     return 0;
 }

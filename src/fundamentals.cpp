@@ -6,6 +6,13 @@
 #include <fstream>
 
 namespace bioinfo {
+    // Create a new empty DNAString
+    DNAString::DNAString() {
+        (*this).header = "";
+        (*this).sequence = "";
+        (*this).sequenceLength = 0;
+    }
+
     // Create a new DNAString with a header and sequence
     DNAString::DNAString(std::string h, std::string s) {
         (*this).header = h;
@@ -252,6 +259,9 @@ namespace bioinfo {
                     }
 
                     header = txt.substr(1);
+                    while (header.back() == '\n' || header.back() == '\r') {
+                        header.pop_back();
+                    }
                     seq = "";
                 } else {
                     seq += txt;

@@ -18,6 +18,20 @@ namespace bioinfo {
         };
     }
 
+    struct DirectedEdge {
+        std::string tail;
+        std::string head;
+    };
+
+    class AdjacencyList {
+        private:
+            std::vector<DirectedEdge> dsde;
+        public:
+            AdjacencyList(std::vector<DNAString> &dsv, unsigned int ok);
+            std::string toString();
+
+    };
+
     std::vector<unsigned int> exactDNAStringMotif(DNAString &ds, DNAString &motif, bool overlap);
     unsigned int hammingDistance(DNAString &s, DNAString &t);
     double proteinMass(AAString &as, const MassTable &mt);

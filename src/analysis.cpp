@@ -3,9 +3,55 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <sstream>
 
 namespace bioinfo {
-    // Get the indices in the DNAString `ds` where a DNA motif (`motif`) is found 
+    // Create a new `AdjacencyList` object that generates the overlap graph of a vector of DNAStrings and 
+    // stores the headers of each directed edge that make up the graph.
+    AdjacencyList::AdjacencyList(std::vector<DNAString> &dsv, unsigned int ok) {
+        std::vector<DNAString>::iterator outer;
+        std::vector<DNAString>::iterator inner;
+
+        DirectedEdge dsde;
+        std::string prefix;
+        std::string suffix;
+
+        for (outer = dsv.begin(); outer != dsv.end(); outer++) {
+            for (inner = dsv.begin(); inner != dsv.end(); inner++) {
+                if (outer != inner && outer->getSequenceLength() > ok && inner->getSequenceLength() > ok) {
+
+                    suffix = outer->getSequence().substr(outer->getSequenceLength() - ok);
+                    prefix = inner->getSequence().substr(0, ok);
+
+                    if (prefix == suffix) {
+                        dsde.tail = outer->getHeader();
+                        dsde.head = inner->getHeader();
+
+                        (*this).dsde.push_back(dsde);
+                    }
+                }
+            }
+        }
+    }
+
+    // Return the `AdjacencyList` directed edge vector as a string.
+    std::string AdjacencyList::toString() {
+        std::stringstream ss;
+
+        std::vector<DirectedEdge>::iterator it;
+
+        for (it = (*this).dsde.begin(); it != (*this).dsde.end(); it++) {
+            ss << it->tail << " " << it->head;
+
+            if(it + 1 != (*this).dsde.end()) {
+                ss << "\n";
+            }
+        }
+
+        return ss.str();
+    }
+
+    // Get the indices in the DNAString `ds` where a DNA motif (`motif`) is found .
     std::vector<unsigned int> exactDNAStringMotif(DNAString &ds, DNAString &motif, bool overlap) {
         std::vector<unsigned int> positions;
         unsigned int pos = 0;
@@ -31,7 +77,7 @@ namespace bioinfo {
         return positions;
     }
 
-    // Get the hamming distance between the sequences of two DNAStrings (`s` and `t`)
+    // Get the hamming distance between the sequences of two DNAStrings (`s` and `t`).
     unsigned int hammingDistance(DNAString &s, DNAString &t) {
         unsigned int hd = 0;
         unsigned int i = 0;
@@ -49,7 +95,7 @@ namespace bioinfo {
         return hd;
     }
 
-    // Calculate the total mass of a protein `as` in daltons based on a mass table `mt`
+    // Calculate the total mass of a protein `as` in daltons based on a mass table `mt`.
     double proteinMass(bioinfo::AAString &as, const MassTable &mt) {
         double pm = 0.0;
         unsigned int i;
@@ -70,7 +116,7 @@ namespace bioinfo {
     }
 
     // Calculate how many possible mRNA strands an inputted protein sequence `as` could of come from applied with the modulus 
-    // operator at a value of `m`
+    // operator at a value of `m`.
     unsigned int inferredRNACount(AAString &as, const AATranscribableUnitTable &ut, unsigned int m) {
         unsigned int i;
         unsigned int asLength = as.getSequenceLength();
