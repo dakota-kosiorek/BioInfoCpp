@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 
 namespace bioinfo {
     typedef std::unordered_map<std::string, char> AATable;
@@ -98,6 +99,9 @@ namespace bioinfo {
     std::string transcribe(std::string s);
     std::string translate(std::string s, const AATable &code);
     DNAString reverseComplement(DNAString &ds);
+
+    std::vector<DNAString> readDNAStringFile(std::string &fn);
+    std::vector<DNAString> readDNAStringFile(const char *fnp);
 };
 
 #endif // FUNDAMENTALS_HPP

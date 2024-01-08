@@ -11,32 +11,14 @@
 int main() {
     std::cout << std::fixed << std::setprecision(3);
 
-    bioinfo::RNAString a = bioinfo::RNAString(
-        std::string("Rosalind_10"),
-        std::string("ATGGTCTACATAGCTGACAAACAGCACGTAGCAATCGGTCGAATCTCGAGAGGCATATGGTCACATGATCGGTCGAGCGTGTTTCAAAGTTTGCGCCTAG")
-    );
+    std::vector<bioinfo::DNAString> vec = bioinfo::readDNAStringFile("rosalind_grph.txt");
 
-    bioinfo::RNAString b = bioinfo::RNAString(
-        std::string("Rosalind_12"),
-        std::string("ATCGGTCGAA")
-    );
+    std::vector<bioinfo::DNAString>::iterator it;
 
-    bioinfo::RNAString c = bioinfo::RNAString(
-        std::string("Rosalind_15"),
-        std::string("ATCGGTCGAGCGTGT")
-    );
-
-    std::vector<bioinfo::RNAString> vec;
-
-    vec.push_back(b);
-    vec.push_back(c);
-
-    bioinfo::RNAString mrna = bioinfo::spliceRNA(a, vec);
-    bioinfo::AAString protein = bioinfo::AAString(mrna, bioinfo::GeneticCode::STANDARD_GENETIC_CODE);
-
-    std::cout << "pre-mRNA: " << a.getSequence() << std::endl;
-    std::cout << "mRNA:     " << mrna.getSequence() << std::endl;
-    std::cout << "Protein:  " << protein.getSequence() << std::endl;
+    for (it = vec.begin(); it != vec.end(); it++) {
+        std::cout << it->getHeader() << std::endl;
+        std::cout << it->getSequence() << std::endl;
+    }
 
     return 0;
 }

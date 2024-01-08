@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
+#include <fstream>
 
 namespace bioinfo {
     // Create a new DNAString with a header and sequence
@@ -226,5 +228,53 @@ namespace bioinfo {
 
         rc.setSequence(s);
         return rc;
+    }
+
+    // Read a FASTA file with name `fn` and return a vector of DNAString objects.
+    std::vector<DNAString> readDNAStringFile(std::string &fn) {
+        std::vector<DNAString> vec;
+        std::ifstream file(fn);
+
+        std::string txt;
+        std::string header = "";
+        std::string seq = "";
+
+        if (!file.good()) {
+            throw std::invalid_argument("ERROR: readDNAStringFile could not open file!");
+        } else {
+            while (std::getline(file, txt)) {
+                if (txt.empty()) {
+                    continue;
+                } else if (txt.at(0) == '>') {
+                    if (!header.empty()) {
+                        DNAString ds = DNAString(header, seq);
+                        vec.push_back(ds);
+                    }
+
+                    header = txt.substr(1);
+                    seq = "";
+                } else {
+                    seq += txt;
+                    while (seq.back() == '\n' || seq.back() == '\r') {
+                        seq.pop_back();
+                    }
+                }
+            }
+
+            if (!header.empty()) {
+                DNAString ds = DNAString(header, seq);
+                vec.push_back(ds);
+            }
+        }
+
+        file.close();
+
+        return vec;
+    }
+
+    // Read a FASTA file with name `fn` and return a vector of DNAString objects.
+    std::vector<DNAString> readDNAStringFile(const char *fnp) {
+        std::string fn = std::string(fnp);
+        return readDNAStringFile(fn);
     }
 }
