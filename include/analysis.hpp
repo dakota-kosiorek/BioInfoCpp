@@ -26,8 +26,9 @@ namespace bioinfo {
     class AdjacencyList {
         private:
             std::vector<DirectedEdge> dsde;
+            template <typename T> void internalConstructor(std::vector<T> &vec, unsigned int ok);
         public:
-            AdjacencyList(std::vector<DNAString> &dsv, unsigned int ok);
+            AdjacencyList(std::vector<DNAString> &vec, unsigned int ok);
             std::string toString();
 
     };

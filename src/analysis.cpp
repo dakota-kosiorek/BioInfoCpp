@@ -8,7 +8,11 @@
 namespace bioinfo {
     // Create a new `AdjacencyList` object that generates the overlap graph of a vector of DNAStrings and 
     // stores the headers of each directed edge that make up the graph.
-    AdjacencyList::AdjacencyList(std::vector<DNAString> &dsv, unsigned int ok) {
+    AdjacencyList::AdjacencyList(std::vector<DNAString> &vec, unsigned int ok) {
+        (*this).internalConstructor(vec, ok);
+    }
+
+    template <typename T> void AdjacencyList::internalConstructor(std::vector<T> &vec, unsigned int ok) {
         std::vector<DNAString>::iterator outer;
         std::vector<DNAString>::iterator inner;
 
@@ -16,8 +20,8 @@ namespace bioinfo {
         std::string prefix;
         std::string suffix;
 
-        for (outer = dsv.begin(); outer != dsv.end(); outer++) {
-            for (inner = dsv.begin(); inner != dsv.end(); inner++) {
+        for (outer = vec.begin(); outer != vec.end(); outer++) {
+            for (inner = vec.begin(); inner != vec.end(); inner++) {
                 if (outer != inner && outer->getSequenceLength() > ok && inner->getSequenceLength() > ok) {
 
                     suffix = outer->getSequence().substr(outer->getSequenceLength() - ok);

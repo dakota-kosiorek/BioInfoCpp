@@ -10,10 +10,10 @@ LDIR =lib
 
 LIBS=-lm
 
-_DEPS = analysis.hpp biomath.hpp fundamentals.hpp genetics.hpp
+_DEPS = analysis.hpp biomath.hpp fundamentals.hpp genetics.hpp query.hpp
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o analysis.o biomath.o fundamentals.o genetics.o
+_OBJ = main.o analysis.o biomath.o fundamentals.o genetics.o query.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 

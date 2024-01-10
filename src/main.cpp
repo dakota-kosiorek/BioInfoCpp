@@ -7,14 +7,20 @@
 #include <genetics.hpp>
 #include <analysis.hpp>
 #include <biomath.hpp>
+#include <query.hpp>
 
 int main() {
     std::cout << std::fixed << std::setprecision(3);
 
-    std::vector<bioinfo::DNAString> vec = bioinfo::readDNAStringFile("rosalind_grph.txt");
-    bioinfo::AdjacencyList dsal = bioinfo::AdjacencyList(vec, 3);
+    const std::string host = "uniprot.org";
+    const std::string path = "/uniprot/A2Z669";
 
-    std::cout << dsal.toString() << std::endl;
+    std::string response = bioinfo::httpGet(host, path);
+
+    if (!response.empty()) {
+        std::cout << "Response:" << std::endl;
+        std::cout << response << std::endl;
+    }
 
     return 0;
 }
